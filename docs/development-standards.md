@@ -12,6 +12,20 @@ These rules apply to every feature, fix and refactor, together with [architectur
 
 Scale this preparation to the work: a small change needs a short explanation in its task/PR; a consequential architectural decision needs a repository document. Routine implementation choices do not require a separate approval ceremony.
 
+## Engineering language
+
+Use English consistently for developer-facing artifacts:
+
+- Commit subjects and bodies, PR titles and descriptions.
+- Code identifiers and descriptive file/module names, following the existing naming conventions.
+- Comments in source, configuration and scripts; docstrings, API documentation comments, TODO and FIXME notes.
+- Test suite/case descriptions, diagnostic messages and developer-facing logs.
+- New technical standards and architecture decision records.
+
+Write clear, concise comments that explain intent, constraints or tradeoffs rather than repeating the code. Use consistent English domain terminology in identifiers and technical explanations. Review language consistency alongside the normal quality checks.
+
+This engineering convention does not select the product's UI language or require English conversation with the owner. User-facing copy follows the product language/localization decisions in [design guidelines](design-guidelines.md); existing Turkish onboarding documentation may remain localized. Preserve external API identifiers, quoted source material and localization/test data where their original language is meaningful. Do not rewrite Git history to translate previous commits.
+
 ## SOLID, cohesion and coupling
 
 | Principle             | Application in this repository                                                                                                                                                                                       |

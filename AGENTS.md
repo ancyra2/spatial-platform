@@ -13,6 +13,7 @@
 - Every dependency needs a current use. Never commit secrets or generated build artifacts.
 - Run format, lint, tests and builds for changes. Never report unexecuted checks as passing.
 - Document major architecture changes and their tradeoffs.
+- Use English for commit messages, PR titles/descriptions, code identifiers, comments/docstrings, TODOs, test descriptions and developer-facing logs. See `docs/development-standards.md` for language scope.
 - Native AR belongs behind a custom Capacitor plugin. Kotlin/ARCore and Swift/ARKit details must not enter Angular business code.
 - Application name and native identifiers remain TODO until the owner chooses them.
 - Review agents should report findings; the primary agent owns shared foundation configuration edits.
