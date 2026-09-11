@@ -115,6 +115,14 @@ Capacitor config yalnız `dist/apps/web/browser` output'unu tanımlar. **TODO: n
 
 ARCore/ARKit, VPS ve native spatial anchors ileride custom Capacitor plugin ile Kotlin/Swift tarafında uygulanır. Angular business kodu typed platform-neutral adapter ile konuşur; native detaylar bu sınıra sızmaz. Ionic veya ağır UI framework yoktur.
 
+## AI stratejisi
+
+AI projenin planlanan bir parçasıdır. Mimari akış: Angular → NestJS domain endpoint'i → domain servisi → AI sağlayıcı adaptörü. API anahtarları ve sağlayıcı SDK'ları backend'de kalır; ortak kontratlar yalnız uygulamaya ait veri tiplerini taşır.
+
+İlk kullanım senaryosu seçildiğinde ilgili domain içinde çalışan entegrasyon eklenecek. Sağlayıcı/model seçimi, çıktı doğrulaması, kullanım/maliyet sınırları, timeout ve hata davranışı, veri gizliliği ve değerlendirme testleri o özelliğin parçası olacak. Cihaz üzerinde AI veya Computer Vision gerektiğinde native detaylar Capacitor plugin sınırında tutulacak.
+
+Şu anda AI SDK'sı, endpoint'i, boş AI library'si veya yeni environment değişkeni eklenmedi. Ayrıntılar: [planlanan AI mimarisi](docs/architecture.md#ai-integration-strategy-planned).
+
 ## Dizinler
 
 ```text

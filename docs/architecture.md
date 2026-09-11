@@ -51,6 +51,42 @@ The API uses `/api/v1`, strict environment validation, a global whitelisting Val
 
 Prisma 7.10 uses `prisma.config.ts`, the `prisma-client` generator and the PostgreSQL driver adapter. Client output stays inside the API and is generated, never committed or shared. The Nx build/typecheck/test prerequisites generate it automatically. The schema intentionally has no business models; the first SQL migration enables PostGIS idempotently. Apply migrations before running the API. Database service owns client/pool lifecycle and a bounded readiness query. Future domain repositories/data-access own Prisma and spatial SQL; controllers and shared contracts must never expose Prisma types or scatter PostGIS queries. PostGIS extension-owned tables are not product models and should not be imported indiscriminately during introspection.
 
+## AI integration strategy (planned)
+
+AI is a planned capability, not an implemented subsystem. No provider, model, SDK, endpoint or AI library has been selected or added. Introduce working code with the first concrete use case; keep feature policy inside its owning domain rather than creating a generic AI platform in advance.
+
+For server-hosted AI, the intended request flow is:
+
+```text
+Angular feature
+  -> NestJS domain endpoint
+  -> domain application service
+  -> provider adapter
+  -> selected AI provider
+```
+
+The domain service owns the task, input selection, prompt construction and interpretation of results. A narrow provider adapter owns SDK calls and maps provider responses/errors into application-owned types. Start with one provider and only the interface needed by that use case; add provider switching, orchestration or queues only when justified by a real requirement. Keep this inside the modular monolith.
+
+Use existing Nx scopes/types: future domain application libraries use `scope:api` / `type:feature`, and extracted provider integration libraries use `scope:api` / `type:data-access`. Create those libraries only when code needs them. Provider SDKs and types stay on the server; Angular must not call paid provider APIs directly or receive their credentials. Shared contracts contain only the transport shapes the frontend actually consumes, never provider SDK types, prompts or internal tool definitions. These AI-specific restrictions are design requirements for the first integration; no new SDK-specific lint rules exist yet.
+
+### Requirements for the first AI feature
+
+- Define the user outcome and acceptance examples first. Choose the provider/model against that task's quality, latency, cost and data-handling needs; record the decision when made.
+- Validate request inputs and structured model outputs. Treat generated content as untrusted and potentially incorrect; label AI-generated information and keep it distinguishable from verified place/institution data. A model response must not grant permissions or directly authorize database writes or tool actions.
+- Enforce access controls appropriate to the feature, per-user/request limits, input/output size budgets and provider spending limits before exposing paid inference. Keep model selection and credentials in validated server configuration.
+- Define timeouts, bounded retries for transient failures and a predictable unavailable/error response. AI failure should affect its feature without making the core API's process health depend on an external provider.
+- Send only the data required for the task. Decide disclosure/consent, retention and provider data handling before transmitting camera images, precise location or private content. Do not log API keys, raw images, full prompts or private content by default; collect request identifiers, latency, usage and sanitized failure categories.
+- Treat user content, retrieved text and image-derived instructions as data, not trusted instructions. Any future tools require server-side allowlists and authorization independent of model output.
+- Test domain behavior with a fake adapter, including malformed output, timeout, unavailable provider and limit enforcement. Keep a small task-specific evaluation set; real provider calls must be explicit, credentialed checks rather than a requirement for routine CI.
+
+### Device AI and Computer Vision
+
+On-device inference is a separate execution choice, to be evaluated when offline operation, privacy, latency or sensor access makes it useful. Apply **Common by default, native when necessary**: share TypeScript logic where practical, and keep native-only inference or advanced camera/sensor functionality behind the typed Capacitor plugin boundary. Kotlin/Swift, ARCore/ARKit and native model runtime details must not enter Angular business code.
+
+The owning feature should define capability detection, permission behavior and an explicit unsupported/unavailable state. Uploading device data to a cloud provider must not become an automatic fallback without the feature's data-handling decision. Native AR tracking/anchors and AI inference have separate responsibilities even if a future camera feature uses both.
+
+Possible first use cases include place information assistance, image recognition or moderation; none is selected yet. Embeddings, vector storage, RAG, agents, worker queues and model hosting remain undecided until a use case requires them.
+
 ## Development infrastructure
 
 Host pnpm processes run Angular/Nest for fast reload/debugging. Compose runs independent PostgreSQL/PostGIS and Redis services; there is no artificial dependency between them. `docker compose up -d --wait` waits for both healthchecks. PostgreSQL data persists in a named volume. Redis is ephemeral, password-protected and unused by business code. Add caching, rate limiting or queues only when required; BullMQ/workers are absent.
