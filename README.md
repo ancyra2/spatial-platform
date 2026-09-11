@@ -4,6 +4,16 @@ Konum ve kamera odaklı, fiziksel mekanlara dijital bilgi ve iz bırakmayı hede
 
 **Common by default, native when necessary.** Tek Angular kod tabanı Web/PWA ve ileride Capacitor Android/iOS için kullanılır. Backend REST modular monolith'tir. Ayrıntılar: [architecture](docs/architecture.md), [agent kuralları](AGENTS.md).
 
+## Geliştirme ve tasarım kuralları
+
+Her geliştirme, mevcut mimari kararlar ve tanımlı sorumluluklar üzerinden ilerler. SOLID, yüksek kohezyon (birlikte değişen sorumlulukların bir arada olması), düşük bağımlılık ve ihtiyaca uygun tasarım desenleri esas alınır. Ekranlar ortak tipografi, tasarım token'ları, metin dili ve yeniden kullanılan component'lerle geliştirilir; aynı işlev için sayfaya özel farklı buton veya etkileşim üretilmez.
+
+- [Mimari](docs/architecture.md): katmanlar, domain sınırları ve teknoloji kararları.
+- [Geliştirme standartları](docs/development-standards.md): iş öncesi tasarım, SOLID, desen seçimi, karar kaydı ve tamamlanma ölçütleri.
+- [Arayüz ve içerik kuralları](docs/design-guidelines.md): ortak bileşenler, görsel hiyerarşi, tipografi, erişilebilirlik ve metin tutarlılığı.
+
+İlk ürün geliştirmesi için sıra: kullanıcı akışı ve kabul ölçütleri → bilgi mimarisi/wireframe → ortak görsel temeller ve gerekli bileşenler → uçtan uca çalışan ilk akış. Görsel değerler ve ürün dili ilk ekran tasarımında belirlenecek; şu anda tasarım sistemi kodu oluşturulmadı.
+
 ## Stack ve gereksinimler
 
 - Node.js **24.13.0**, Node 24 LTS; `.nvmrc` ve `engines` ile belirtilir.

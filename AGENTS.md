@@ -2,6 +2,10 @@
 
 - Preserve user changes and Git history. Inspect the working tree before editing.
 - Follow `docs/architecture.md`: common by default, native when necessary.
+- Before implementation, follow `docs/development-standards.md` and identify the owning domain, responsibilities, dependency direction and acceptance criteria.
+- Apply SOLID with high cohesion and low coupling. Use design patterns for concrete problems; prefer composition and avoid speculative abstractions.
+- For UI work, follow `docs/design-guidelines.md`: use shared design tokens, typography, terminology and reusable components for equivalent interactions across screens.
+- Reuse existing components before adding variants; document justified exceptions and update affected consumers consistently.
 - Respect Nx scopes and types. Never import API/server code into web code.
 - Shared contracts are pure TypeScript: no Angular, Nest, Prisma or Node types.
 - Grow domain-first when a real feature arrives; avoid empty libraries and speculative abstractions.

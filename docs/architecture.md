@@ -4,6 +4,8 @@
 
 One Angular/TypeScript application serves Web/PWA and, later, Capacitor Android/iOS. NestJS is a REST modular monolith. No product domains are implemented yet.
 
+Implementation must follow [development standards](development-standards.md) and [design guidelines](design-guidelines.md). Establish the owning domain, responsibilities and dependency direction before creating files. These are repository-wide rules; the visual system and feature implementations will be built incrementally through real user flows.
+
 ## Responsibilities
 
 | Location                | Responsibility                                                                              |
