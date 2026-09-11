@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.nx/
+.angular/
+.env
+.env.*
+!.env.example
+apps/api/src/generated/
+*.tsbuildinfo
+.DS_Store
+
+.angular
+
+__screenshots__/
+
+vitest.config.*.timestamp*

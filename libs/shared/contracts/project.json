@@ -1,0 +1,23 @@
+{
+  "name": "shared-contracts",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/contracts/src",
+  "tags": ["scope:shared", "type:contract"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "outputs": ["{workspaceRoot}/dist/libs/shared/contracts"],
+      "options": {
+        "command": "tsc -p libs/shared/contracts/tsconfig.lib.json"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "options": {
+        "command": "tsc -p libs/shared/contracts/tsconfig.lib.json --noEmit"
+      }
+    }
+  }
+}

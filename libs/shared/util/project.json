@@ -1,0 +1,27 @@
+{
+  "name": "shared-util",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/util/src",
+  "tags": ["scope:shared", "type:util"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "outputs": ["{workspaceRoot}/dist/libs/shared/util"],
+      "options": {
+        "command": "tsc -p libs/shared/util/tsconfig.lib.json"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "options": {
+        "commands": [
+          "tsc -p libs/shared/util/tsconfig.lib.json --noEmit",
+          "tsc -p libs/shared/util/tsconfig.spec.json --noEmit"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}
